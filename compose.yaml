@@ -17,7 +17,7 @@ services:
 
     # Assuming you want to mount a volume for the output file
     volumes:
-      - ./dashboard:/path/to/dashboard
+      - ./dashboard:/dashboard
 
   web:
     build: .
@@ -27,7 +27,7 @@ services:
       - mongo
     restart: always
     volumes:
-      - ./dashboard:/path/to/dashboard
+      - ./dashboard:/dashboard
 
 
   mongo-express:

@@ -12,11 +12,10 @@ database = client['Projet_Marmiton']
 collection = database['Recette']
 cursor = collection.find()
 
-data = pd.read_json('/path/to/dashboard/recipes.json')
+data = pd.read_json('dashboard/recipes.json')
 
-#dev
 collection.insert_many(data.to_dict(orient='records'))
-#dev 
+
 
 
 
@@ -80,8 +79,9 @@ def name_graph():
 
     data_names = pd.DataFrame(list(collection.aggregate(pipeline)))
     data_names.rename(columns={"_id":"Titre", "count": "Ocurrence"}, inplace=True)
+    data_names = data_names[data_names['Titre'].str.len() >= 4]
 
-    plot = px.bar(data_names[0:20], x="Titre", y="Ocurrence")
+    plot = px.bar(data_names[0:20], x="Titre", y="Ocurrence", title="Occurence of words in the titles of recipes")
     return render_template('names.html', plot=plot.to_html())
 
 
@@ -105,7 +105,7 @@ def ingredients_graph():
 
     df_combined = pd.concat([top_20, autre])
 
-    plot = px.pie(df_combined, values="Ocurrence", names="Ingredients")
+    plot = px.pie(df_combined, values="Ocurrence", names="Ingredients", title="Occurence of ingredients in all recipes")
     return render_template('ingredients.html', plot=plot.to_html())
 
 
@@ -130,7 +130,7 @@ def ustensils_graph():
     df_combined = pd.concat([top_20, autre])
 
 
-    plot = px.pie(df_combined, values="Ocurrence", names="Ustensils")
+    plot = px.pie(df_combined, values="Ocurrence", names="Ustensils", title="Occurence of ustensils in all recipes")
     return render_template('ustensils.html', plot=plot.to_html())
 
 
@@ -150,7 +150,7 @@ def steps_graph():
         df["difficulty"].iloc[i] = df["details"].iloc[i]["difficulty"]
         df["count"].iloc[i] = df["details"].iloc[i]["count"]
     df.drop("details", axis=1, inplace=True)
-    plot = px.bar(df, x="_id", y="count", color="difficulty")
+    plot = px.bar(df, x="_id", x_label="Amount of steps", y="count", y_label="Number of recipes", color="difficulty", title="Number of recipes by the number of steps and difficulty :")
     return render_template('step.html', plot=plot.to_html())
 
 

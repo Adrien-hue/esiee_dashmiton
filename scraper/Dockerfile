@@ -17,4 +17,4 @@ EXPOSE 8080
 ENV NAME World
 
 # Run scrapy command
-CMD ["scrapy", "crawl", "marmiton_home", "-O", "/path/to/dashboard/recipes.json"]
+CMD ["scrapy", "crawl", "marmiton_home", "-O", "/dashboard/recipes.json"]
