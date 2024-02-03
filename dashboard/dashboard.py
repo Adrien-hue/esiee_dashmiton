@@ -81,7 +81,7 @@ def name_graph():
     data_names.rename(columns={"_id":"Titre", "count": "Ocurrence"}, inplace=True)
     data_names = data_names[data_names['Titre'].str.len() >= 4]
 
-    plot = px.bar(data_names[0:20], x="Titre", y="Ocurrence", title="Occurence of words in the titles of recipes")
+    plot = px.bar(data_names[0:20], x="Titre", y="Ocurrence", title="Occurence des mots dans tout les titres des recettes")
     return render_template('names.html', plot=plot.to_html())
 
 
@@ -105,7 +105,7 @@ def ingredients_graph():
 
     df_combined = pd.concat([top_20, autre])
 
-    plot = px.pie(df_combined, values="Ocurrence", names="Ingredients", title="Occurence of ingredients in all recipes")
+    plot = px.pie(df_combined, values="Ocurrence", names="Ingredients", title="Occurence des ingrédients dans toutes les recettes")
     return render_template('ingredients.html', plot=plot.to_html())
 
 
@@ -130,7 +130,7 @@ def ustensils_graph():
     df_combined = pd.concat([top_20, autre])
 
 
-    plot = px.pie(df_combined, values="Ocurrence", names="Ustensils", title="Occurence of ustensils in all recipes")
+    plot = px.pie(df_combined, values="Ocurrence", names="Ustensils", title="Occurence deds ustensils dans toutes les recettes")
     return render_template('ustensils.html', plot=plot.to_html())
 
 
@@ -150,7 +150,7 @@ def steps_graph():
         df["difficulty"].iloc[i] = df["details"].iloc[i]["difficulty"]
         df["count"].iloc[i] = df["details"].iloc[i]["count"]
     df.drop("details", axis=1, inplace=True)
-    plot = px.bar(df, x="_id", x_label="Amount of steps", y="count", y_label="Number of recipes", color="difficulty", title="Number of recipes by the number of steps and difficulty :")
+    plot = px.bar(df, x="_id", y="count", labels={"_id":"Nombre d'étapes","count":"Nombres de recettes"}, color="difficulty", title="Nombre de recettes par nombre d'étapes et la difficulté")
     return render_template('step.html', plot=plot.to_html())
 
 
