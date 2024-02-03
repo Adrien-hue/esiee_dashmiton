@@ -1,10 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>TEST</title>
-</head>
-<body>
-   <h1>Welcome/h1>
-</body>
-</html>
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="jumbotron">
+    <h1 class="display-4">Un project de scraping python sur le site de marmiton </h1>
+    <p class="lead"></p>
+    <p>Title: Dash-Miton</p>
+
+    <hr class="my-4">
+    {{log | safe}}
+  </div>
+{% endblock %}

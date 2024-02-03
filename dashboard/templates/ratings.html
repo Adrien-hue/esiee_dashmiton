@@ -1,0 +1,9 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="graph" id="scatterplot">
+  {{plot | safe}}
+  <p>Les recettes notées 0/5 sont des recettes sans commentaires.</p>
+</div>
+
+{% endblock %}

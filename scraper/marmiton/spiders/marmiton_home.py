@@ -1,20 +1,32 @@
+from typing import Iterable
 import scrapy
 from scrapy import Request
 
 import re
+
+from scrapy.http import Request
 
 from ..items import RecipeItem
 
 class MarmitonHomeSpider(scrapy.Spider):
     name = "marmiton_home"
     allowed_domains = ["marmiton.org"]
-    start_urls = ["https://marmiton.org"]
+    start_urls = ["https://www.marmiton.org/recettes/index/categorie/aperitif-ou-buffet/", 
+                  "https://www.marmiton.org/recettes/index/categorie/entree/",
+                  "https://www.marmiton.org/recettes/index/categorie/plat-principal/",
+                  "https://www.marmiton.org/recettes/index/categorie/dessert/"
+                  ]
+
+    def start_requests(self):
+        for url in self.start_urls:
+            for i in range(1,600):
+                yield scrapy.Request(url+str(i), self.parse)
 
     def parse(self, response):
         recipes_links = {
             name:response.urljoin(url) for name, url in zip(
-                response.css(".mrtn-recipe-card").css(".mrtn-recipe-card__title").css("a::text").extract(),
-                response.css(".mrtn-recipe-card").css(".mrtn-recipe-card__title").css("a::attr(href)").extract()
+                response.css(".recipe-card").css(".recipe-card__title::text").extract(),
+                response.css(".recipe-card").css(".recipe-card-link").css("a::attr(href)").extract()
             )
         }
 

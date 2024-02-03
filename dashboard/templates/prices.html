@@ -1,0 +1,9 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="graph" id="bargraph">
+  {{plot | safe}}
+  <p>tempo</p>
+</div>
+
+{% endblock %}
