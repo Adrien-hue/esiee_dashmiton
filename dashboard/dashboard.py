@@ -12,7 +12,7 @@ database = client['Projet_Marmiton']
 collection = database['Recette']
 cursor = collection.find()
 
-data = pd.read_json('dashboard/test.json')
+data = pd.read_json('/path/to/dashboard/recipes.json')
 
 #dev
 collection.insert_many(data.to_dict(orient='records'))

@@ -19,7 +19,7 @@ class MarmitonHomeSpider(scrapy.Spider):
 
     def start_requests(self):
         for url in self.start_urls:
-            for i in range(1,600):
+            for i in range(1,200):
                 yield scrapy.Request(url+str(i), self.parse)
 
     def parse(self, response):

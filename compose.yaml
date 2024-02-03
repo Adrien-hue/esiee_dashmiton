@@ -9,8 +9,15 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
+
+  scrapy-service:
+    build:
+      context: scraper
+      dockerfile: Dockerfile    
+
+    # Assuming you want to mount a volume for the output file
     volumes:
-      - vol:/mongo
+      - ./dashboard:/path/to/dashboard
 
   web:
     build: .
@@ -20,7 +27,7 @@ services:
       - mongo
     restart: always
     volumes:
-      - vol:/dashboard
+      - ./dashboard:/path/to/dashboard
 
 
   mongo-express:
@@ -40,8 +47,4 @@ services:
       ME_CONFIG_MONGODB_ENABLE_ADMIN: 'true'
       ME_CONFIG_MONGODB_PORT: 27017
       ME_CONFIG_MONGODB_SERVER: 'mongo'
-    volumes:
-      - vol:/mongo_express
 
-volumes:
-  vol:
