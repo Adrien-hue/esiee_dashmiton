@@ -9,6 +9,8 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - vol:/mongo
 
   web:
     build: .
@@ -16,6 +18,9 @@ services:
       - "5000:5000"
     links:
       - mongo
+    restart: always
+    volumes:
+      - vol:/dashboard
 
 
   mongo-express:
@@ -35,3 +40,8 @@ services:
       ME_CONFIG_MONGODB_ENABLE_ADMIN: 'true'
       ME_CONFIG_MONGODB_PORT: 27017
       ME_CONFIG_MONGODB_SERVER: 'mongo'
+    volumes:
+      - vol:/mongo_express
+
+volumes:
+  vol:

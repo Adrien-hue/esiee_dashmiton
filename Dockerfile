@@ -16,6 +16,11 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
+# Setup of the flask app
+ENV FLASK_APP=./dashboard/dashboard.py
+ENV LISTEN_PORT=5000
+EXPOSE 5000
+
 # Create a non-privileged user that the app will run under.
 # See https://docs.docker.com/go/dockerfile-user-best-practices/
 ARG UID=10001
@@ -44,6 +49,6 @@ COPY . .
 
 # Expose the port that the application listens on.
 EXPOSE 8000
-
+EXPOSE 27017
 # Run the application.
-CMD flask run
+CMD ["flask", "run", "--host=0.0.0.0"]
