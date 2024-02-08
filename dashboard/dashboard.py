@@ -10,16 +10,12 @@ app = Flask(__name__)
 client = pymongo.MongoClient('mongo_database', 27017, username="root", password="example")
 database = client['Projet_Marmiton']
 collection = database['Recette']
-cursor = collection.find()
 
-data = pd.read_json('dashboard/recipes.json')
+data = pd.read_json("dashboard/recipes.json")
 
 collection.insert_many(data.to_dict(orient='records'))
 
-
-
-
-DEVELOPMENT_ENV = True
+DEVELOPMENT_ENV = False
 
 @app.route('/')
 def dashboard():
@@ -156,4 +152,4 @@ def steps_graph():
 
 
 if __name__ == "__main__":
-    app.run(debug=DEVELOPMENT_ENV)
+    app.run()

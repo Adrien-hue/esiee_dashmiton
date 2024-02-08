@@ -14,8 +14,6 @@ services:
     build:
       context: scraper
       dockerfile: Dockerfile    
-
-    # Assuming you want to mount a volume for the output file
     volumes:
       - ./dashboard:/dashboard
 
@@ -23,8 +21,9 @@ services:
     build: .
     ports:
       - "5000:5000"
-    links:
+    depends_on:
       - mongo
+      - scrapy-service
     restart: always
     volumes:
       - ./dashboard:/dashboard
